@@ -46,14 +46,14 @@ export default function LoyaltyPage() {
           <div className="loyalty-container">
             <div className="card text-center mb" style={{ padding: '2rem', background: 'var(--primary-color)', color: 'var(--text-on-primary)' }}>
               <h3>Current Balance</h3>
-              <h1 style={{ fontSize: '3rem', margin: '1rem 0' }}>{loyaltyData.points} pts</h1>
+              <h1 style={{ fontSize: '3rem', margin: '1rem 0' }}>{loyaltyData.balance} pts</h1>
               <p>You can redeem points at checkout! (100 pts = $10 discount)</p>
             </div>
 
             <h3>Points History</h3>
-            {loyaltyData.history && loyaltyData.history.length > 0 ? (
+            {loyaltyData.transactions && loyaltyData.transactions.length > 0 ? (
               <div className="grid grid-2 mt">
-                {loyaltyData.history.map((tx) => (
+                {loyaltyData.transactions.map((tx) => (
                   <div key={tx._id} className="card">
                     <div className="card-body row between">
                       <div>
