@@ -128,6 +128,38 @@ async function seed() {
     await RestaurantTable.findByIdAndUpdate(createdTables[1]._id, { status: 'cleaning_pending' });
   }
 
+  // Demo order and payment so today's revenue is not zero.
+  console.log('[seed] Creating a completed order and payment for today...');
+  const dbMenuItem = await MenuItem.findOne();
+  if (dbMenuItem && customer) {
+    const order = await Order.create({
+      customer: customer._id,
+      type: 'dine_in',
+      items: [
+        {
+          menuItem: dbMenuItem._id,
+          name: dbMenuItem.name,
+          unitPrice: dbMenuItem.price,
+          quantity: 2,
+          lineTotal: dbMenuItem.price * 2,
+        },
+      ],
+      subtotal: dbMenuItem.price * 2,
+      status: 'completed',
+      isPaid: true,
+    });
+
+    await Payment.create({
+      order: order._id,
+      customer: customer._id,
+      method: 'bkash',
+      transactionRef: `trx_${Date.now()}`,
+      amount: dbMenuItem.price * 2,
+      status: 'success',
+      paidAt: new Date(),
+    });
+  }
+
   // eslint-disable-next-line no-console
   console.log('\n[seed] Done. Test accounts (password: password123):');
   users.forEach((u) => console.log(`  - ${u.role.padEnd(9)} ${u.email}`));
