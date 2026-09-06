@@ -37,9 +37,6 @@ export async function connectDB(uri = env.mongoUri) {
     // eslint-disable-next-line no-console
     console.log('[db] ⚠ Data will NOT persist after server restart.');
     
-    // Auto-seed the memory database
-    await runSeed();
-    
     return conn;
   }
 }
