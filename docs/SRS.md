@@ -12,7 +12,7 @@ DineEase is a web-based application designed to streamline restaurant operations
 DineEase is built using the MERN stack (MongoDB, Express.js, React, Node.js). The system aims to replace manual booking and ordering processes with a streamlined digital solution, offering real-time updates and centralized management.
 
 ## 3. User Roles
-The application supports three distinct user roles with specific access levels:
+The application supports four distinct user roles with specific access levels:
 - **Customer**: End-users who can view the menu, make reservations, pre-order food, pay digitally, request refunds (F16 extension), and manage their loyalty points.
 - **Staff**: Employees who manage active orders, track table availability, handle table cleaning workflows, and approve or reject reservations.
 - **Admin**: System administrators with full control over the platform, including managing menus, tables, staff accounts, and viewing comprehensive business reports.
@@ -57,7 +57,7 @@ Please see the [System Architecture Diagram](diagrams/system-architecture.md) fo
 
 ### 6.2 Security
 - Passwords must be hashed (using bcrypt) before being stored in the database.
-- Environment variables (like `JWT_SECRET` and `MONGODB_URI`) must be securely managed and never committed to version control.
+- Environment variables (like `JWT_SECRET` and `MONGO_URI`) must be securely managed and never committed to version control.
 - API endpoints must validate input data to prevent injection attacks.
 
 ### 6.3 Reliability
@@ -79,7 +79,7 @@ Please see the [System Architecture Diagram](diagrams/system-architecture.md) fo
 - The restaurant operates in a single timezone.
 
 ## 10. Revision History
-**Version**: v0.9 (Pre-Final Draft)
+**Version**: v1.0 (Final Release)
 **Date**: 2026-09-06
 **Changes**: Updated testing requirements, added refund extensions, and populated screenshot structure.
 

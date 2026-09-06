@@ -4,7 +4,7 @@
 DineEase uses a combination of automated backend testing and manual integration/frontend testing.
 - **Backend**: Automated unit and integration tests using Jest and Supertest.
 - **Frontend**: Manual end-to-end testing and production build verification.
-- **Dependencies**: Verified via `npm audit` and clean installations.
+- **Dependencies**: Verified via `npm audit`. Known low-risk vulnerabilities in `express`/`qs` are accepted as they await upstream patches.
 
 ## 2. Automated Tests (Backend)
 
@@ -55,13 +55,13 @@ Below is the manual testing checklist for verifying the full DineEase applicatio
 ### Required Backend Environment Variables:
 The backend requires a `.env` file in the `server/` directory:
 - `PORT`: Server port (default 5000)
-- `MONGODB_URI`: Valid MongoDB connection string
+- `MONGO_URI`: Valid MongoDB connection string
 - `JWT_SECRET`: Secure secret for signing tokens
 - `NODE_ENV`: Should be `development` or `production`
 
 ### Required Frontend Environment Variables:
 The frontend requires a `.env` file in the `client/` directory:
-- `VITE_API_URL`: The URL pointing to the backend (e.g., `http://localhost:5000/api/v1`)
+- `VITE_API_URL`: The URL pointing to the backend (e.g., `http://localhost:5000/api`)
 
 ## 6. Known Limitations
 - The Digital Payment (F16) feature uses a simulated flow and does not process real transactions or connect to an external banking gateway (as per project constraints).

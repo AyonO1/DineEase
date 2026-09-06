@@ -111,6 +111,33 @@ async function seed() {
       seatingPreference: demoTable.seatingPreference,
       status: 'completed',
     });
+
+    console.log('[seed] Creating a pending reservation fixture (for approval demo)...');
+    const future = new Date();
+    future.setDate(future.getDate() + 2); // 2 days from now
+    future.setHours(20, 0, 0, 0);
+    const futureEnd = new Date(future.getTime() + 90 * 60 * 1000);
+    await Reservation.create({
+      customer: customer._id,
+      table: createdTables[1]._id, // another table
+      date: `${future.getFullYear()}-${pad(future.getMonth() + 1)}-${pad(future.getDate())}`,
+      startTime: `${pad(future.getHours())}:${pad(future.getMinutes())}`,
+      endTime: `${pad(futureEnd.getHours())}:${pad(futureEnd.getMinutes())}`,
+      startAt: future,
+      endAt: futureEnd,
+      guests: 4,
+      seatingPreference: 'window',
+      status: 'pending',
+    });
+
+    console.log('[seed] Creating mock favourites for the customer...');
+    const favItems = await MenuItem.find().limit(3);
+    for (const item of favItems) {
+      await Favourite.create({
+        customer: customer._id,
+        menuItem: item._id,
+      });
+    }
   }
 
   // Demo cleaning tasks so the cleaner queue is immediately populated — one

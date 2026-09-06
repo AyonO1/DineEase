@@ -25,3 +25,14 @@ Add the following environment variables in the Vercel dashboard (`Settings > Env
 ## Serverless Entry Point
 The entry point for Vercel is `server/api/index.js`. 
 This file implements a module-level cached database connection to prevent connection pool exhaustion on MongoDB Atlas across multiple warm lambda invocations. Auto-indexing is also disabled for production performance.
+
+## Frontend Vercel Configuration
+Configure the Vercel project for the React client exactly as follows:
+
+1. **Root Directory**: `client`
+2. **Framework Preset**: `Vite`
+3. **Build Command**: `npm run build`
+4. **SPA Rewrite**: Ensure `client/vercel.json` exists with a catch-all rewrite to `/index.html` to prevent 404 errors on direct deep links.
+
+### Required Frontend Environment Variables:
+- `VITE_API_URL`: The URL pointing to your deployed backend (e.g., `https://dine-ease-server-two.vercel.app/api`)

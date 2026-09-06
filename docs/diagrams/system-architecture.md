@@ -6,10 +6,10 @@ The following diagram illustrates the complete request lifecycle and architectur
 flowchart TD
     Client[React Client] -->|API Request| Axios[Axios Instance]
     Axios -->|HTTP Request| Server[Express Route]
-    Server --> Validator[Input Validators]
-    Validator -->|Valid Data| Auth[Authenticate Middleware]
+    Server --> Auth[Authenticate Middleware]
     Auth -->|Valid Token| Authorize[Authorize Middleware]
-    Authorize -->|Role Allowed| Controller[Controller Layer]
+    Authorize -->|Role Allowed| Validator[Input Validators]
+    Validator -->|Valid Data| Controller[Controller Layer]
     Controller --> Service[Service Layer]
     Service --> Model[Mongoose Model]
     Model -->|Read/Write| MongoDB[(MongoDB)]

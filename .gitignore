@@ -18,3 +18,5 @@ Thumbs.db
 *.7z
 
 .vercel/
+.vercel
+.env*

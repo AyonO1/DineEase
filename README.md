@@ -110,12 +110,10 @@ npm --workspace client run build
 
 | Member | GitHub Username | Features Assigned | Percentage | Branch / PR Evidence | Commit Evidence |
 |--------|-----------------|-------------------|------------|----------------------|-----------------|
-| Member | GitHub Username | Features Assigned | Percentage | Branch / PR Evidence | Commit Evidence |
-|--------|-----------------|-------------------|------------|----------------------|-----------------|
-| **Provat Saha Pranto** | `provatsahanobo` | F01, F02, F06, F07, F20 | | | |
-| **Mushfique Nayeeb Ayon** | `AyonO1` | F03, F04, F05, F16, F17, Auth Backend | | | |
-| **Noor-E-Jannat** | `Noor-E-Jannat20` | F08, F09, F10, F11, F15 | | | |
-| **B.M. Jaber Seam** | `bmjaberseam-spec` | F12, F13, F14, F18, F19, Auth Models | | | |
+| **Mushfique Nayeeb Ayon** | `AyonO1` | F03, F04, F05, F16, F17, Auth Backend | 25% | 17 merged PRs | 102 commits |
+| **Provat Saha Pranto** | `provatsahanobo` | F01, F02, F06, F07, F20 | 25% | 8 merged PRs | 19 commits |
+| **B.M. Jaber Seam** | `bmjaberseam-spec` / `BMSEAM` | F12, F13, F14, F18, F19, Auth Models | 25% | 7 merged PRs | 14 commits |
+| **Noor-E-Jannat** | `Noor-E-Jannat20` | F08, F09, F10, F11, F15 | 25% | 7 merged PRs | 11 commits |
 
 ## Current Release
 **Version**: v1.0 (Final Release)

@@ -44,7 +44,7 @@ export default function LoyaltyPage() {
       >
         {loyaltyData && (
           <div className="loyalty-container">
-            <div className="card text-center mb" style={{ padding: '2rem', background: 'var(--primary-color)', color: 'var(--text-on-primary)' }}>
+            <div className="card center mb" style={{ padding: '2rem', background: 'var(--brand)', color: 'var(--on-accent)' }}>
               <h3>Current Balance</h3>
               <h1 style={{ fontSize: '3rem', margin: '1rem 0' }}>{loyaltyData.balance} pts</h1>
               <p>You can redeem points at checkout! (100 pts = $10 discount)</p>
@@ -60,8 +60,8 @@ export default function LoyaltyPage() {
                         <strong>{tx.description}</strong>
                         <div className="text-sm muted">{new Date(tx.createdAt).toLocaleDateString()}</div>
                       </div>
-                      <div className={`badge ${tx.type === 'earn' || tx.type === 'refund' ? 'badge-success' : 'badge-danger'}`}>
-                        {tx.type === 'earn' || tx.type === 'refund' ? '+' : '-'}{tx.points} pts
+                      <div className={`badge ${tx.type === 'earn' || tx.type === 'refund_restore' ? 'badge-success' : 'badge-danger'}`}>
+                        {tx.type === 'earn' || tx.type === 'refund_restore' ? '+' : '-'}{tx.points} pts
                       </div>
                     </div>
                   </div>
