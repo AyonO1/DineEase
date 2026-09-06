@@ -18,7 +18,16 @@ export function createApp() {
   // (5174, 5175, …) never triggers a CORS "Network Error". Production locks
   // to CLIENT_URL only.
   const corsOrigin = env.isProd
-    ? env.clientUrl
+    ? (origin, cb) => {
+        if (
+          !origin ||
+          origin === env.clientUrl ||
+          /\.vercel\.app$/.test(origin)
+        ) {
+          return cb(null, true);
+        }
+        return cb(null, false);
+      }
     : (origin, cb) => {
         if (!origin || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
           return cb(null, true);
