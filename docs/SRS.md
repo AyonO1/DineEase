@@ -13,7 +13,7 @@ DineEase is built using the MERN stack (MongoDB, Express.js, React, Node.js). Th
 
 ## 3. User Roles
 The application supports three distinct user roles with specific access levels:
-- **Customer**: End-users who can view the menu, make reservations, pre-order food, pay digitally, and manage their loyalty points.
+- **Customer**: End-users who can view the menu, make reservations, pre-order food, pay digitally, request refunds (F16 extension), and manage their loyalty points.
 - **Staff**: Employees who manage active orders, track table availability, handle table cleaning workflows, and approve or reject reservations.
 - **Admin**: System administrators with full control over the platform, including managing menus, tables, staff accounts, and viewing comprehensive business reports.
 
@@ -80,6 +80,7 @@ Please see the [System Architecture Diagram](diagrams/system-architecture.md) fo
 
 ## 10. Revision History
 **Version**: v0.9 (Pre-Final Draft)
+**Date**: 2026-09-06
 **Changes**: Updated testing requirements, added refund extensions, and populated screenshot structure.
 
 ## 11. System Interfaces (Screenshots)
@@ -106,4 +107,4 @@ Please insert the captured screenshots for each feature below:
 - **[F20]** Loyalty Points: `[Insert F20_screenshot.png]`
 
 ## 12. Testing
-The application has 5 core test suites (Authentication, Reservations, Reservation History, Defects, Integrity, Refund). All 75 tests are currently passing. See `TESTING.md` for full test plan details.
+The application has 6 core test suites (Authentication, Reservations, Reservation History, Defects, Integrity, Refund). All 75 tests are currently passing. See `TESTING.md` for full test plan details.
