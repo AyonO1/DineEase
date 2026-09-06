@@ -3,7 +3,8 @@
 This document outlines the primary REST API endpoints available in the DineEase backend.
 
 ## Base URL
-All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/v1`).
+All API endpoints are prefixed with `/api` (e.g., `http://localhost:5000/api`). 
+There is also a public health check at `GET /api/health` and a root endpoint at `GET /`.
 
 ---
 
@@ -13,8 +14,10 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 |--------|----------|-------------|---------------|---------------|
 | POST | `/auth/register` | Register a new customer account | No | Any |
 | POST | `/auth/login` | Log in and receive a JWT | No | Any |
-| POST | `/auth/logout` | Log out and invalidate token | Yes | Any |
+| POST | `/auth/logout` | Log out and clear cookies | No | Any |
 | GET | `/auth/me` | Get current user profile | Yes | Any |
+| PATCH | `/auth/me` | Update current user profile | Yes | Any |
+| PATCH | `/auth/password` | Change current user password | Yes | Any |
 
 ---
 
@@ -22,12 +25,16 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
+| GET | `/categories` | Get all menu categories | No | Any |
+| POST | `/categories` | Create a new menu category | Yes | Admin |
+| PATCH | `/categories/:id` | Update a menu category | Yes | Admin |
+| DELETE | `/categories/:id` | Delete a menu category | Yes | Admin |
 | GET | `/menu-items` | Get all menu items with search/filter | No | Any |
 | GET | `/menu-items/:id` | Get single menu item details | No | Any |
 | POST | `/menu-items` | Create a new menu item | Yes | Admin |
-| PUT | `/menu-items/:id` | Update an existing menu item | Yes | Admin |
+| PATCH | `/menu-items/:id` | Update an existing menu item | Yes | Admin |
+| PATCH | `/menu-items/:id/availability` | Toggle menu item availability | Yes | Admin |
 | DELETE | `/menu-items/:id` | Delete a menu item | Yes | Admin |
-| GET | `/categories` | Get all menu categories | No | Any |
 
 ---
 
@@ -35,11 +42,12 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
-| GET | `/tables` | Get all tables and their statuses | Yes | Admin, Staff |
-| GET | `/tables/availability` | Check table availability | No | Any |
+| GET | `/tables/available` | Check table availability | Yes | Any |
+| GET | `/tables` | Get all tables and their statuses | Yes | Admin, Waiter, Cleaner |
 | POST | `/tables` | Add a new table | Yes | Admin |
-| PUT | `/tables/:id` | Update table details/status | Yes | Admin, Staff |
-| DELETE | `/tables/:id` | Remove a table | Yes | Admin |
+| PATCH | `/tables/:id` | Update table details/status | Yes | Admin |
+| PATCH | `/tables/:id/disable` | Disable a table | Yes | Admin |
+| PATCH | `/tables/:id/enable` | Enable a table | Yes | Admin |
 
 ---
 
@@ -47,12 +55,13 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
-| GET | `/reservations/history` | Get user's reservation history | Yes | Customer |
-| GET | `/reservations` | Get all reservations | Yes | Admin, Staff |
-| POST | `/reservations` | Create a new reservation | Yes | Customer |
-| PUT | `/reservations/:id/status` | Approve, reject, or update status | Yes | Admin, Staff |
-| PUT | `/reservations/:id/preorder` | Add pre-order food to reservation | Yes | Customer |
-| DELETE | `/reservations/:id` | Cancel a reservation | Yes | Customer, Admin |
+| POST | `/reservations` | Create a new reservation | Yes | Any |
+| GET | `/reservations/my` | Get user's reservation history | Yes | Any |
+| PATCH | `/reservations/:id/cancel` | Cancel a reservation | Yes | Any |
+| GET | `/reservations` | Get all reservations | Yes | Admin, Waiter |
+| PATCH | `/reservations/:id/approve` | Approve a reservation | Yes | Admin, Waiter |
+| PATCH | `/reservations/:id/reject` | Reject a reservation | Yes | Admin, Waiter |
+| GET | `/reservations/:id` | Get reservation details | Yes | Any |
 
 ---
 
@@ -60,10 +69,11 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
-| GET | `/orders` | Get all active orders | Yes | Admin, Staff |
+| POST | `/orders` | Create a new order | Yes | Any |
+| GET | `/orders/my` | Get user's order history | Yes | Any |
+| GET | `/orders` | Get all active orders | Yes | Admin, Waiter |
+| PATCH | `/orders/:id/status` | Update order status | Yes | Admin, Waiter |
 | GET | `/orders/:id` | Get specific order details | Yes | Any |
-| POST | `/orders` | Create a new direct order | Yes | Customer, Staff |
-| PUT | `/orders/:id/status` | Update order status (Preparing, Served) | Yes | Staff |
 
 ---
 
@@ -71,9 +81,9 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
-| GET | `/favourites` | Get user's favorite menu items | Yes | Customer |
-| POST | `/favourites/:itemId` | Add item to favorites | Yes | Customer |
-| DELETE | `/favourites/:itemId` | Remove item from favorites | Yes | Customer |
+| GET | `/favourites` | Get user's favorite menu items | Yes | Any |
+| POST | `/favourites` | Add item to favorites | Yes | Any |
+| DELETE | `/favourites/:menuItemId` | Remove item from favorites | Yes | Any |
 
 ---
 
@@ -82,8 +92,10 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
 | GET | `/reviews` | Get all reviews | No | Any |
+| GET | `/reviews/my` | Get user's reviews | Yes | Customer |
 | POST | `/reviews` | Submit a new review | Yes | Customer |
-| DELETE | `/reviews/:id` | Delete a review | Yes | Admin |
+| PATCH | `/reviews/:id` | Update a review | Yes | Customer |
+| DELETE | `/reviews/:id` | Delete a review | Yes | Customer |
 
 ---
 
@@ -92,7 +104,8 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
 | GET | `/notifications` | Get user's notifications | Yes | Any |
-| PUT | `/notifications/:id/read` | Mark notification as read | Yes | Any |
+| PATCH | `/notifications/read-all` | Mark all notifications as read | Yes | Any |
+| PATCH | `/notifications/:id/read` | Mark specific notification as read | Yes | Any |
 
 ---
 
@@ -100,9 +113,11 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
-| GET | `/cleaning` | Get all table cleaning tasks | Yes | Staff, Admin |
-| POST | `/cleaning` | Assign a cleaning task | Yes | Admin, Staff |
-| PUT | `/cleaning/:id/complete` | Mark a cleaning task as completed | Yes | Staff |
+| PATCH | `/cleaning/reservations/:id/complete` | Complete dining & trigger cleaning | Yes | Admin, Waiter |
+| GET | `/cleaning/tasks` | Get all cleaning tasks | Yes | Admin, Cleaner |
+| POST | `/cleaning/tasks` | Assign a manual cleaning task | Yes | Admin |
+| PATCH | `/cleaning/tasks/:id/start` | Start a cleaning task | Yes | Cleaner |
+| PATCH | `/cleaning/tasks/:id/ready` | Mark table as cleaned and ready | Yes | Cleaner |
 
 ---
 
@@ -112,8 +127,9 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 |--------|----------|-------------|---------------|---------------|
 | GET | `/staff` | Get all staff members | Yes | Admin |
 | POST | `/staff` | Create a new staff account | Yes | Admin |
-| PUT | `/staff/:id` | Update staff details | Yes | Admin |
-| DELETE | `/staff/:id` | Deactivate staff account | Yes | Admin |
+| PATCH | `/staff/:id` | Update staff details | Yes | Admin |
+| PATCH | `/staff/:id/disable` | Deactivate staff account | Yes | Admin |
+| PATCH | `/staff/:id/enable` | Reactivate staff account | Yes | Admin |
 
 ---
 
@@ -121,10 +137,15 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
-| POST | `/payments/process` | Process a simulated digital payment | Yes | Customer |
-| GET | `/invoices/:id` | Get digital invoice details | Yes | Customer, Admin |
-| POST | `/refunds/request` | Request a refund for an order/reservation | Yes | Customer |
-| PUT | `/refunds/:id/process` | Approve and process a refund | Yes | Admin |
+| POST | `/payments` | Process a payment | Yes | Any |
+| GET | `/payments/my` | Get user's payment history | Yes | Any |
+| POST | `/refunds` | Request a refund for an order | Yes | Customer |
+| GET | `/refunds/my` | Get user's refund requests | Yes | Customer |
+| GET | `/refunds` | Get all refund requests | Yes | Admin |
+| POST | `/refunds/:id/process` | Approve and process a refund | Yes | Admin |
+| POST | `/refunds/:id/reject` | Reject a refund request | Yes | Admin |
+| GET | `/invoices/my` | Get user's invoices | Yes | Any |
+| GET | `/invoices/:id` | Get digital invoice details | Yes | Any |
 
 ---
 
@@ -132,8 +153,7 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
-| GET | `/loyalty/points` | Get user's current loyalty point balance | Yes | Customer |
-| POST | `/loyalty/redeem` | Redeem points for a discount | Yes | Customer |
+| GET | `/loyalty` | Get user's current loyalty point balance | Yes | Customer |
 
 ---
 
@@ -142,8 +162,7 @@ All API endpoints are prefixed with `/api/v1` (e.g., `http://localhost:5000/api/
 | Method | Endpoint | Description | Auth Required | Allowed Roles |
 |--------|----------|-------------|---------------|---------------|
 | GET | `/admin/dashboard` | Get high-level dashboard metrics | Yes | Admin |
-| GET | `/admin/reports/sales` | Generate detailed sales report | Yes | Admin |
-| GET | `/admin/reports/reservations` | Generate reservation analytics report | Yes | Admin |
+| GET | `/admin/reports` | Generate detailed analytics reports | Yes | Admin |
 
 ---
 
